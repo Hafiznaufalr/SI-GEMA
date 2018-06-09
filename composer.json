@@ -1,0 +1,16 @@
+{
+    "name": "hafiz/line-bot-php",
+    "description": "Simple line bot using php slim framework",
+    "type": "project",
+    "require": {
+        "php": "^7.1",
+        "slim/slim": "^3.10",
+        "linecorp/line-bot-sdk": "^2.3"
+    },
+    "authors": [
+        {
+            "name": "Hafiznaufalr",
+            "email": "hafiz.nr5758@gmail.com"
+        }
+    ]
+}
