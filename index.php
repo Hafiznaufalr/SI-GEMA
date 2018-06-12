@@ -12,8 +12,8 @@ use \LINE\LINEBot\SignatureValidator as SignatureValidator;
 $pass_signature = true;
  
 // set LINE channel_access_token and channel_secret
-$channel_access_token = "";
-$channel_secret = "";
+$channel_access_token = "vw1kM8rBEu2rsZl2xMJvKrxWGaqsqlY9lYdhqAY0QZ6xtX4Uq6HS8YFfOul14SIuclr4u7ERN6Vq6AqLE3MyvpamYyh/GuqHiVpmg+kQF1E8SbjQrnarhcnf3gYNMTxtk1vkssANsRH17mCkByz1VAdB04t89/1O/w1cDnyilFU=";
+$channel_secret = "d65105e4095437bcc12929db37559cd4";
  
 // inisiasi objek bot
 $httpClient = new CurlHTTPClient($channel_access_token);
@@ -54,6 +54,26 @@ $app->post('index.php/webhook', function ($request, $response) use ($bot, $pass_
     }
  
     // kode aplikasi nanti disini
+    $data = json_decode($body, true);
+if(is_array($data['events'])){
+    foreach ($data['events'] as $event)
+    {
+        if ($event['type'] == 'message')
+        {
+            if($event['message']['type'] == 'text')
+            {
+                // send same message as reply to user
+                $result = $bot->replyText($event['replyToken'], $event['message']['text']);
+ 
+                // or we can use replyMessage() instead to send reply message
+                $textMessageBuilder = new TextMessageBuilder($event['message']['text']);
+                $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+ 
+                return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+            }
+        }
+    }
+}
  
 });
  
