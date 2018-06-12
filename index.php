@@ -90,9 +90,26 @@ $bot->replyMessage($replyToken, $multiMessageBuilder);
 $app->get('/pushmessage', function($req, $res) use ($bot)
 {
     // send push message to user
-    $userId = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+    $userId = 'Uaf67c8bcbffc2a4b0ebfafaa8053eab9';
     $textMessageBuilder = new TextMessageBuilder('Halo, ini pesan push');
     $result = $bot->pushMessage($userId, $textMessageBuilder);
+   
+    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+}); 
+
+$app->get('/multicast', function($req, $res) use ($bot)
+{
+    // list of users
+    $userList = [
+        'U206d25c2ea6bd87c17655609xxxxxxxx',
+        'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'];
+ 
+    // send multicast message to user
+    $textMessageBuilder = new TextMessageBuilder('Halo, ini pesan multicast');
+    $result = $bot->multicast($userList, $textMessageBuilder);
    
     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 });
