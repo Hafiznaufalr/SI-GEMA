@@ -96,7 +96,7 @@ $app->get('/pushmessage', function($req, $res) use ($bot)
    
     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 }); 
-
+$bot->multicast(userList, MessageBuilder);
 $app->get('/multicast', function($req, $res) use ($bot)
 {
     // list of users
@@ -113,5 +113,17 @@ $app->get('/multicast', function($req, $res) use ($bot)
    
     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 });
+
+$bot->getProfile(userId);
+
+$app->get('index.php/profile', function($req, $res) use ($bot)
+{
+    // get user profile
+    $userId = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+    $result = $bot->getProfile($userId);
+   
+    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+});
  
+
 $app->run();
