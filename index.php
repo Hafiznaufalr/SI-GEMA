@@ -74,7 +74,27 @@ if(is_array($data['events'])){
         }
     }
 }
+$textMessageBuilder1 = new TextMessageBuilder('ini pesan balasan pertama');
+$textMessageBuilder2 = new TextMessageBuilder('ini pesan balasan kedua');
+$stickerMessageBuilder = new StickerMessageBuilder(1, 106);
  
+$multiMessageBuilder = new MultiMessageBuilder();
+$multiMessageBuilder->add($textMessageBuilder1);
+$multiMessageBuilder->add($textMessageBuilder2);
+$multiMessageBuilder->add($stickerMessageBuilder);
+ 
+$bot->replyMessage($replyToken, $multiMessageBuilder);
+ 
+});
+
+$app->get('/pushmessage', function($req, $res) use ($bot)
+{
+    // send push message to user
+    $userId = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+    $textMessageBuilder = new TextMessageBuilder('Halo, ini pesan push');
+    $result = $bot->pushMessage($userId, $textMessageBuilder);
+   
+    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 });
  
 $app->run();
